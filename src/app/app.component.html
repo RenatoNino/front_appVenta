@@ -1,0 +1,6 @@
+<app-navbar (itemSelect)="updatePage($event)"></app-navbar>
+<div class="container mt-3">
+    <app-form></app-form>
+    <app-content [clientsList]="clientsList" [salesList]="salesList" [productsList]="productsList" [itemActive]="itemActive" (updatePage)="updatePage($event)"></app-content>
+    <app-spinner *ngIf="loading==true"></app-spinner>
+</div>

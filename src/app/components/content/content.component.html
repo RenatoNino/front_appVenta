@@ -1,0 +1,149 @@
+<table class="table table-striped mt-3" [ngSwitch]="itemActive">
+  <thead>
+    <tr *ngSwitchCase="'client'">
+      <th scope="col">DNI</th>
+      <th scope="col">Nombres</th>
+      <th scope="col">Apellidos</th>
+      <th scope="col">Talla</th>
+      <th scope="col">Edad</th>
+      <th scope="col">Acciones</th>
+    </tr>
+    <tr *ngSwitchCase="'product'">
+      <th scope="col">ID</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Acciones</th>
+    </tr>
+    <tr *ngSwitchCase="'sale'">
+      <th scope="col">ID</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Monto</th>
+      <th scope="col">DNI Cliente</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody *ngSwitchCase="'client'">
+    <tr *ngFor="let client of clientsList;let i=index">
+      <th scope="row">{{client.dni}}</th>
+      <td>{{client.nombres}}</td>
+      <td>{{client.apellidos}}</td>
+      <td>{{client.talla}}</td>
+      <td>{{client.edad}}</td>
+      <td>
+        <span class="cursor icons" (click)="update(client.id)">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </span>
+        <span class="cursor icons" (click)="open(contentDelete,i)">
+          <i class="fa-solid fa-trash"></i>
+        </span>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngSwitchCase="'product'">
+    <tr *ngFor="let product of productsList;let i=index">
+      <th scope="row">{{product.id}}</th>
+      <td>{{product.precio}}</td>
+      <td>{{product.nombre}}</td>
+      <td>{{product.stock}}</td>
+      <td>
+        <span class="cursor icons" (click)="update(product.id)">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </span>
+        <span class="cursor icons" (click)="open(contentDelete,i)">
+          <i class="fa-solid fa-trash"></i>
+        </span>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngSwitchCase="'sale'">
+    <tr *ngFor="let sale of salesList;let i=index">
+      <th scope="row">{{sale.id}}</th>
+      <td>{{sale.fecha}}</td>
+      <td>{{sale.monto}}</td>
+      <td>{{sale.dniCliente}}</td>
+      <td>
+        <span class="cursor icons" (click)="update(sale.id)">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </span>
+        <span class="cursor icons" (click)="open(contentDelete,i)">
+          <i class="fa-solid fa-trash"></i>
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #contentDelete let-modal [ngSwitch]="itemActive">
+	<div class="modal-header">
+		<h4 class="modal-title">Confirmación de eliminación</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<p>
+      ¿Está seguro de eliminar el registro con los siguientes datos?
+    </p>
+    <p *ngSwitchCase="'client'">
+      - ID: {{clientSelect.id}} <br>
+      - DNI: {{clientSelect.dni}} <br>
+      - Nombres: {{clientSelect.nombres}} <br>
+      - Apellidos: {{clientSelect.apellidos}} <br>
+      - Registro: {{clientSelect.fechaRegistro}} <br>
+      - Edad: {{clientSelect.edad}} <br>
+      - Talla: {{clientSelect.talla}} <br>
+    </p>
+    <p *ngSwitchCase="'product'">
+      - ID: {{productSelect.id}} <br>
+      - Nombre: {{productSelect.nombre}} <br>
+      - Precio: {{productSelect.precio}} <br>
+      - Stock: {{productSelect.stock}} <br>
+    </p>
+    <p *ngSwitchCase="'sale'">
+      - ID: {{saleSelect.id}} <br>
+      - Fecha: {{saleSelect.fecha}} <br>
+      - Monto: {{saleSelect.monto}} <br>
+      - ID Cliente: {{saleSelect.dniCliente}} <br>
+    </p>
+	</div>
+	<div class="modal-footer">
+		<button *ngSwitchCase="'client'" type="button" class="btn btn-danger" (click)="delete(clientSelect.id)">Eliminar</button>
+    <button *ngSwitchCase="'product'" type="button" class="btn btn-danger" (click)="delete(productSelect.id)">Eliminar</button>
+    <button *ngSwitchCase="'sale'" type="button" class="btn btn-danger" (click)="delete(saleSelect.id)">Eliminar</button>
+	</div>
+</ng-template>
+
+<ng-template #contentUpdate let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Confirmación de eliminación</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body" [ngSwitch]="itemActive">
+		<p>
+      ¿Está seguro de eliminar el registro con los siguientes datos?
+    </p>
+    <p *ngSwitchCase="'client'">
+      - ID: {{clientSelect.id}} <br>
+      - DNI: {{clientSelect.dni}} <br>
+      - Nombres: {{clientSelect.nombres}} <br>
+      - Apellidos: {{clientSelect.apellidos}} <br>
+      - Registro: {{clientSelect.fechaRegistro}} <br>
+      - Edad: {{clientSelect.edad}} <br>
+      - Talla: {{clientSelect.talla}} <br>
+    </p>
+    <p *ngSwitchCase="'product'">
+      - ID: {{productSelect.id}} <br>
+      - Nombre: {{productSelect.nombre}} <br>
+      - Precio: {{productSelect.precio}} <br>
+      - Stock: {{productSelect.stock}} <br>
+    </p>
+    <p *ngSwitchCase="'sale'">
+      - ID: {{saleSelect.id}} <br>
+      - Fecha: {{saleSelect.fecha}} <br>
+      - Monto: {{saleSelect.monto}} <br>
+      - ID Cliente: {{saleSelect.dniCliente}} <br>
+    </p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-danger" (click)="modal.close('Close click')">Eliminar</button>
+	</div>
+</ng-template>
